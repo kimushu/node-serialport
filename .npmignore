@@ -13,7 +13,6 @@ test/
 UPGRADE_GUIDE.md
 
 # MIRRORED FROM .gitignore PLEASE MAINTAIN
-*.node
 .DS_Store
 build/
 node_modules
