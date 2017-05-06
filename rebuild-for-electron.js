@@ -4,7 +4,10 @@ const path = require("path");
 const {execSync} = require("child_process");
 const electron_ver = process.argv[2];
 const electron_url = "https://atom.io/download/electron";
-const nodegyp_home = path.join(process.env.HOME, ".node-gyp");
+const nodegyp_home = path.join(
+  process.platform == "win32" ? process.env.USERPROFILE : process.env.HOME,
+  ".node-gyp"
+);
 
 if (!electron_ver) {
   console.error("usage: " + path.basename(process.argv[1]) + " <electron-version>");
