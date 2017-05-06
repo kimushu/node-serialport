@@ -80,6 +80,7 @@ arch_list.forEach((arch) => {
   console.info("# Copying binary (" + dest + ")");
   ensureDirSync(path.dirname(dest));
   fs.writeFileSync(dest, fs.readFileSync(src));
+  fs.chmodSync(dest, 0775);
 });
 
 console.info("# Done.");
