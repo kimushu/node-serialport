@@ -57,7 +57,6 @@
     "commander": "^2.9.0",
     "debug": "^2.6.6",
     "nan": "^2.6.2",
-    "node-pre-gyp": "^0.6.32",
     "safe-buffer": "^5.0.1"
   },
   "devDependencies": {
@@ -77,9 +76,6 @@
     "proxyquire": "^1.7.10",
     "sinon": "^2.2.0"
   },
-  "bundledDependencies": [
-    "node-pre-gyp"
-  ],
   "engines": {
     "node": ">= 4.0.0"
   },
@@ -92,7 +88,6 @@
     "arduino-test": "TEST_PORT=$(./bin/find-arduino.js) npm test",
     "docs": "jsdoc2md --no-cache -t .docs/README.hbs --partial .docs/sig-name.hbs --partial .docs/sig-link.hbs --partial .docs/edit-warning.hbs -r table --separators --name-format -f lib/* lib/bindings/* lib/parsers/* > README.md",
     "docs:diff": "jsdoc2md --no-cache -t .docs/README.hbs --partial .docs/sig-name.hbs --partial .docs/sig-link.hbs --partial .docs/edit-warning.hbs -r table --separators --name-format -f lib/* lib/bindings/* lib/parsers/* | diff -q README.md - || (echo 'Docs out of date, run `npm run docs` and commit the new README.md' && false)",
-    "install": "node-pre-gyp install --fallback-to-build",
     "lint": "eslint lib test bin examples",
     "rebuild-all": "npm rebuild && node-gyp rebuild",
     "stress": "mocha --no-timeouts test/arduinoTest/stress.js",
@@ -100,6 +95,5 @@
     "test:watch": "mocha -w",
     "valgrind": "TEST_PORT=$(./bin/find-arduino.js) valgrind --leak-check=full node test/manual-testing/memory-binding.js",
     "debugger": "TEST_PORT=$(./bin/find-arduino.js) node --inspect --debug-brk test/manual-testing/performance.js"
-  },
-  "gypfile": true
+  }
 }
