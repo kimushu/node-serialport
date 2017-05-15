@@ -310,7 +310,7 @@ void EIO_Read(uv_work_t* req) {
       errorCode = GetLastError();
       if (errorCode != ERROR_IO_PENDING) {
         // Read operation error
-        if (errorCode == ERROR_OPERATION_ABORTED) {
+        if (errorCode == ERROR_OPERATION_ABORTED || errorCode == ERROR_INVALID_HANDLE) {
         } else {
           ErrorCodeToString("Reading from COM port (ReadFile)", errorCode, data->errorString);
           CloseHandle(hEvent);
