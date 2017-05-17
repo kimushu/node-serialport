@@ -262,7 +262,10 @@ void EIO_Write(uv_work_t* req) {
       DWORD lastError = GetLastError();
       if (lastError != ERROR_IO_PENDING) {
         // Write operation error
-        ErrorCodeToString("Writing to COM port (WriteFile)", lastError, data->errorString);
+        if (lastError == ERROR_OPERATION_ABORTED || lastError == ERROR_INVALID_HANDLE) {
+        } else {
+          ErrorCodeToString("Writing to COM port (WriteFile)", lastError, data->errorString);
+        }
         CloseHandle(ov.hEvent);
         return;
       }
@@ -275,7 +278,10 @@ void EIO_Write(uv_work_t* req) {
       if (!GetOverlappedResult((HANDLE)data->fd, &ov, &bytesWritten, TRUE)) {
         // Write operation error
         DWORD lastError = GetLastError();
-        ErrorCodeToString("Writing to COM port (GetOverlappedResult)", lastError, data->errorString);
+        if (lastError == ERROR_OPERATION_ABORTED || lastError == ERROR_INVALID_HANDLE) {
+        } else {
+          ErrorCodeToString("Writing to COM port (GetOverlappedResult)", lastError, data->errorString);
+        }
         CloseHandle(ov.hEvent);
         return;
       }
@@ -328,7 +334,7 @@ void EIO_Read(uv_work_t* req) {
       if (!GetOverlappedResult((HANDLE)data->fd, &ov, &bytesReadAsync, TRUE)) {
         // Read operation error
         errorCode = GetLastError();
-        if (errorCode == ERROR_OPERATION_ABORTED) {
+        if (errorCode == ERROR_OPERATION_ABORTED || errorCode == ERROR_INVALID_HANDLE) {
         } else {
           ErrorCodeToString("Reading from COM port (GetOverlappedResult)", errorCode, data->errorString);
           CloseHandle(hEvent);
